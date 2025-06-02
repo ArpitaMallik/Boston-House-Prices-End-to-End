@@ -1,1 +1,273 @@
-<h2>Hello world!</h2>
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Boston House Price Prediction</title>
+    <link href='https://fonts.googleapis.com/css?family=Poppins:300,400,500,600' rel='stylesheet' type='text/css'>
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            margin: 0;
+            padding: 30px;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .login {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 40px 50px;
+            border-radius: 20px;
+            box-shadow: 0 15px 25px rgba(0,0,0,0.1);
+            width: 1000px;
+            max-width: 95%;
+        }
+
+        h1 {
+            color: #333;
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 32px;
+            font-weight: 600;
+            position: relative;
+            padding-bottom: 15px;
+        }
+
+        h1:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 3px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+
+        .input-container {
+            position: relative;
+            margin-bottom: 25px;
+            padding: 15px;
+            border-radius: 12px;
+            background: #f8f9fa;
+            transition: all 0.3s ease;
+        }
+
+        .input-container:hover {
+            background: #fff;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+
+        .input-label {
+            font-size: 14px;
+            color: #555;
+            margin-bottom: 8px;
+            display: block;
+            font-weight: 500;
+        }
+
+        .input-sublabel {
+            font-size: 12px;
+            color: #666;
+            margin-bottom: 5px;
+            display: block;
+        }
+
+        input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            box-sizing: border-box;
+            transition: all 0.3s ease;
+            font-size: 14px;
+            background: white;
+        }
+
+        input:focus {
+            border-color: #667eea;
+            outline: none;
+            box-shadow: 0 0 5px rgba(102, 126, 234, 0.3);
+        }
+
+        .btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 16px 24px;
+            border: none;
+            border-radius: 12px;
+            width: 100%;
+            cursor: pointer;
+            font-size: 18px;
+            font-weight: 500;
+            margin-top: 30px;
+            transition: all 0.3s ease;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .prediction-text {
+            margin-top: 25px;
+            text-align: center;
+            color: #333;
+            font-weight: 500;
+            font-size: 18px;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 12px;
+        }
+
+        .input-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+
+        .abbr {
+            font-weight: 600;
+            color: #667eea;
+        }
+
+        @media (max-width: 1024px) {
+            .input-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .input-grid {
+                grid-template-columns: 1fr;
+            }
+            .login {
+                padding: 25px;
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="login">
+        <h1>Boston House Price Prediction</h1>
+
+        <form action="{{ url_for('predict')}}" method="post">
+            <div class="input-grid">
+                <div class="input-container">
+                    <label class="input-label">
+                        <span class="abbr">CRIM</span>
+                        <span class="input-sublabel">Crime rate per capita</span>
+                    </label>
+                    <input type="number" step="any" name="CRIM" required="required" />
+                </div>
+
+                <div class="input-container">
+                    <label class="input-label">
+                        <span class="abbr">ZN</span>
+                        <span class="input-sublabel">Residential land zoned for large lots (%)</span>
+                    </label>
+                    <input type="number" step="any" name="ZN" required="required" />
+                </div>
+
+                <div class="input-container">
+                    <label class="input-label">
+                        <span class="abbr">INDUS</span>
+                        <span class="input-sublabel">Non-retail business acres per town (%)</span>
+                    </label>
+                    <input type="number" step="any" name="INDUS" required="required" />
+                </div>
+
+                <div class="input-container">
+                    <label class="input-label">
+                        <span class="abbr">CHAS</span>
+                        <span class="input-sublabel">Charles River dummy variable (1 if bounds river, 0 if not)</span>
+                    </label>
+                    <input type="number" min="0" max="1" step="1" name="CHAS" required="required" />
+                </div>
+
+                <div class="input-container">
+                    <label class="input-label">
+                        <span class="abbr">NOX</span>
+                        <span class="input-sublabel">Nitric oxide concentration (pollution)</span>
+                    </label>
+                    <input type="number" step="any" name="NOX" required="required" />
+                </div>
+
+                <div class="input-container">
+                    <label class="input-label">
+                        <span class="abbr">RM</span>
+                        <span class="input-sublabel">Average rooms per dwelling</span>
+                    </label>
+                    <input type="number" step="any" name="RM" required="required" />
+                </div>
+
+                <div class="input-container">
+                    <label class="input-label">
+                        <span class="abbr">AGE</span>
+                        <span class="input-sublabel">Owner-occupied units built pre-1940 (%)</span>
+                    </label>
+                    <input type="number" step="any" name="Age" required="required" />
+                </div>
+
+                <div class="input-container">
+                    <label class="input-label">
+                        <span class="abbr">DIS</span>
+                        <span class="input-sublabel">Weighted distance to employment centers</span>
+                    </label>
+                    <input type="number" step="any" name="DIS" required="required" />
+                </div>
+
+                <div class="input-container">
+                    <label class="input-label">
+                        <span class="abbr">RAD</span>
+                        <span class="input-sublabel">Highway accessibility index</span>
+                    </label>
+                    <input type="number" step="any" name="RAD" required="required" />
+                </div>
+
+                <div class="input-container">
+                    <label class="input-label">
+                        <span class="abbr">TAX</span>
+                        <span class="input-sublabel">Property tax rate</span>
+                    </label>
+                    <input type="number" step="any" name="TAX" required="required" />
+                </div>
+
+                <div class="input-container">
+                    <label class="input-label">
+                        <span class="abbr">PTRATIO</span>
+                        <span class="input-sublabel">Pupil-teacher ratio by town</span>
+                    </label>
+                    <input type="number" step="any" name="PTRATIO" required="required" />
+                </div>
+
+                <div class="input-container">
+                    <label class="input-label">
+                        <span class="abbr">B</span>
+                        <span class="input-sublabel">Proportion of Black residents</span>
+                    </label>
+                    <input type="number" step="any" name="B" required="required" />
+                </div>
+
+                <div class="input-container">
+                    <label class="input-label">
+                        <span class="abbr">LSTAT</span>
+                        <span class="input-sublabel">Lower status population (%)</span>
+                    </label>
+                    <input type="number" step="any" name="LSTAT" required="required" />
+                </div>
+            </div>
+
+            <button type="submit" class="btn">Predict House Price</button>
+        </form>
+
+        <div class="prediction-text">
+            {{prediction_text}}
+        </div>
+    </div>
+</body>
+</html>
