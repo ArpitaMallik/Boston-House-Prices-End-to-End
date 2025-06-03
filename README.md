@@ -59,13 +59,18 @@ Send JSON input like below to receive the predicted price:
   }
 }
 ```
-### Docker Deployment
-You can containerize the application using Docker.
-Run Docker:
+### Pull the Docker Image and Run the Container
+You can pull and run the Docker image for this project using the following commands:
+
+🔽Pull the Image
 ```
-docker build -t boston-house-price .
-docker run -p 5000:5000 boston-house-price
+docker pull arpitamallik23/boston-house-price
 ```
+🚀Run the Container
+```
+docker run -p 5000:5000 arpitamallik23/boston-house-price
+```
+The app will be accessible at: http://localhost:5000
 
 ### Project Structure
 ```
